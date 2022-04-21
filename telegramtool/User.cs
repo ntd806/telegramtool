@@ -113,8 +113,7 @@ namespace telegramtool
         private string _privateKey = "";
         private string _note = "";
         private string _status = "";
-        private ulong _phone = 0
-            ;
+        private ulong _phone = 0;
         private int _code = 0;
 
         public int Id

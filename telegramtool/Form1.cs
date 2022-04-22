@@ -79,28 +79,8 @@ namespace telegramtool
 
         private void MenuItemConnect_Click(Object sender, EventArgs e)
         {
-            By googleResultText = By.XPath("//*[@id='auth-pages']/div/div[2]/div[2]/div/div[2]/button");
-            By ResultText = By.XPath("//*[@id='auth-pages']/div/div[2]/div[1]/div/div[3]/div[2]/div[1]");
-            By button = By.XPath("//*[@id='auth-pages']/div/div[2]/div[1]/div/div[3]/button[1]");
-            By AutheCode = By.XPath("//*[@id='auth-pages']/div/div[2]/div[3]/div/div[3]/div/input");
-            By Pasword = By.XPath("//*[@id='auth-pages']/div/div[2]/div[4]/div/div[2]/div/input[2]");
-            By login = By.XPath("//*[@id='auth-pages']/div/div[2]/div[4]/div/div[2]/button");
-
-            var webDriver = new ChromeDriver();
-            webDriver.Navigate().GoToUrl("https://web.telegram.org/k/");
-            Thread.Sleep(2000);
-            webDriver.FindElement(googleResultText).Click();
-            Thread.Sleep(3000);
-            webDriver.FindElement(ResultText).SendKeys(this.U.UID);
-
-            Thread.Sleep(1000);
-            webDriver.FindElement(button).Click();
-            Thread.Sleep(10000);
-            webDriver.FindElement(AutheCode).SendKeys(Keys.Enter);
-            Thread.Sleep(1000);
-            webDriver.FindElement(Pasword).SendKeys(this.U.Password);
-            Thread.Sleep(1000);
-            webDriver.FindElement(login).SendKeys(Keys.Enter);
+            Selenium selenium = new Selenium();
+            selenium.init(this.U);
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)

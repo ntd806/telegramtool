@@ -1,13 +1,11 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Keys = OpenQA.Selenium.Keys;
+using Microsoft.VisualBasic;
+using System.Collections.Generic;
+using System;
 
 namespace telegramtool
 {
@@ -17,7 +15,19 @@ namespace telegramtool
 
         public void init(User U)
         {
-            this.driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+
+            options.AddArguments(new List<string>()
+            {
+               "--silent-launch",
+              "--no-startup-window",
+              "no-sandbox",
+              "headless",
+            });
+
+            this.driver = new ChromeDriver(options);
+
+            //this.driver = new ChromeDriver();
             this.login(U);
         }
         public void login(User U)
@@ -28,6 +38,7 @@ namespace telegramtool
             By AutheCode = By.XPath("//*[@id='auth-pages']/div/div[2]/div[3]/div/div[3]/div/input");
             By Pasword = By.XPath("//*[@id='auth-pages']/div/div[2]/div[4]/div/div[2]/div/input[2]");
             By login = By.XPath("//*[@id='auth-pages']/div/div[2]/div[4]/div/div[2]/button");
+
             if (U == null)
             {
                 MessageBox.Show("Bạn chưa chọn số điện thoại. Xin vui lòng chọn lại!");
@@ -39,11 +50,21 @@ namespace telegramtool
                 this.runElementByClick(googleResultText, 3000);
                 this.runElementBySendKeys(ResultText, U.UID, 1000);
                 this.runElementByClick(button, 1000);
-                this.runElementBySendKeys(Pasword, U.Password, 15000);
-                this.runElementBySendKeys(login, Keys.Enter, 1000);
+                var result = Interaction.InputBox("" + "", "Nhập code", "", -1, -1);
+                if (result != "")
+                {
+                    this.runElementBySendKeys(AutheCode, result, 10000);
+                    this.runElementBySendKeys(Pasword, U.Password, 1000);
+                    this.runElementBySendKeys(login, Keys.Enter, 1000);
+                }
+
+                if (result == "")
+                {
+                    MessageBox.Show("Bạn chưa nhập code. Xin vui lòng đăng nhập lại!");
+                    this.driver.Close();
+                }
             }
         }
-
         private bool IsElementPresent(By by)
         {
             try

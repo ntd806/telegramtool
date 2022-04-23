@@ -129,6 +129,13 @@ namespace telegramtool
 
         }
 
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; }
+
+        }
+
         public int Code
         {
             get { return _code; }
@@ -152,13 +159,6 @@ namespace telegramtool
         {
             get { return _email; }
             set { _email = value; }
-
-        }
-
-        public string Password
-        {
-            get { return _password; }
-            set { _password = value; }
 
         }
 
@@ -202,7 +202,7 @@ namespace telegramtool
         }
 
         public User() {}
-        public User(int id, string UID, string name, string email, string password, string ld, string group, string friend, string privateKey, string note, string status)
+        public User(int id, string UID, string password, string name, string email, string ld, string group, string friend, string privateKey, string note, string status)
         {
             this._id = id;
             this._UID = UID;
@@ -220,7 +220,7 @@ namespace telegramtool
         public string toString()
         {
             string s = "{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}";
-            return String.Format(s, this.UID, this.Name, this.Email, this.Password, this.PrivateKey, this.Friend, this.Group, this.Ld, this.Note, this.Status);
+            return String.Format(s, this.UID, this.Password, this.Name, this.Email, this.PrivateKey, this.Friend, this.Group, this.Ld, this.Note, this.Status);
         }
         private void getcode()
         {

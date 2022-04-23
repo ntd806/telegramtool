@@ -100,7 +100,7 @@ namespace telegramtool
                 string Status = Convert.ToString(selectedRow.Cells["Status"].Value);
                 string Ld = Convert.ToString(selectedRow.Cells["Ld"].Value);
                 int Id = Convert.ToInt32(selectedRow.Cells["ID"].Value);
-                this.U = new User(Id, UID, Name, Email, Password, Ld, Group, Friend, PrivateKey, Note, Status);
+                this.U = new User(Id, UID, Password, Name, Email,  Ld, Group, Friend, PrivateKey, Note, Status);
             }
         }
     }

@@ -12,22 +12,37 @@ namespace telegramtool
     public class Selenium
     {
         public ChromeDriver driver;
-
+        private string URL = "https://web.telegram.org/k/";
         public void init(User U)
         {
+            /*ChromeDriverService service = ChromeDriverService.CreateDefaultService();
+            service.EnableVerboseLogging = false;
+            service.SuppressInitialDiagnosticInformation = true;
+            service.HideCommandPromptWindow = true;
+
             ChromeOptions options = new ChromeOptions();
+            options.PageLoadStrategy = PageLoadStrategy.Normal;
+            options.AddArgument("--window-size=1920,1080");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--headless");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--disable-crash-reporter");
+            options.AddArgument("--disable-extensions");
+            options.AddArgument("--disable-in-process-stack-traces");
+            options.AddArgument("--disable-logging");
+            options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--disable-popup-blocking");
+            options.AddArguments("--disable-notifications");
+            options.AddArgument("--log-level=3");
+            options.AddArgument("--output=/dev/null");
 
-            options.AddArguments(new List<string>()
-            {
-               "--silent-launch",
-              "--no-startup-window",
-              "no-sandbox",
-              "headless",
-            });
 
+            this.driver = new ChromeDriver(service, options);*/
+
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--disable-popup-blocking");
+            options.AddArguments("--disable-notifications");
             this.driver = new ChromeDriver(options);
-
-            //this.driver = new ChromeDriver();
             this.login(U);
         }
         public void login(User U)
@@ -45,24 +60,24 @@ namespace telegramtool
             }
             else
             {
-               
-                this.driver.Navigate().GoToUrl("https://web.telegram.org/k/");
-                this.runElementByClick(googleResultText, 3000);
-                this.runElementBySendKeys(ResultText, U.UID, 1000);
-                this.runElementByClick(button, 1000);
-                var result = Interaction.InputBox("" + "", "Nhập code", "", -1, -1);
-                if (result != "")
-                {
-                    this.runElementBySendKeys(AutheCode, result, 10000);
-                    this.runElementBySendKeys(Pasword, U.Password, 1000);
-                    this.runElementBySendKeys(login, Keys.Enter, 1000);
+                 this.driver.Navigate().GoToUrl(this.URL);
+                 this.runElementByClick(googleResultText, 3000);
+                 this.runElementBySendKeys(ResultText, U.UID, 1000);
+                 this.runElementByClick(button, 0);
+                 var result = Interaction.InputBox("" + "", "Nhập code", "", -1, -1);
+                 if (result != "")
+                 {
+                     this.runElementBySendKeys(AutheCode, result, 0);
+                     this.runElementBySendKeys(Pasword, U.Password, 3000);
+                     this.runElementBySendKeys(login, Keys.Enter, 0);
+                     Thread.Sleep(2000);
                 }
 
                 if (result == "")
-                {
-                    MessageBox.Show("Bạn chưa nhập code. Xin vui lòng đăng nhập lại!");
-                    this.driver.Close();
-                }
+                 {
+                     MessageBox.Show("Bạn chưa nhập code. Xin vui lòng đăng nhập lại!");
+                     this.driver.Close();
+                 }
             }
         }
         private bool IsElementPresent(By by)
